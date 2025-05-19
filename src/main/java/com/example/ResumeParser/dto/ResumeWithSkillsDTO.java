@@ -2,7 +2,6 @@ package com.example.ResumeParser.dto;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

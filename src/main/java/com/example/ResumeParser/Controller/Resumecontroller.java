@@ -3,11 +3,9 @@ package com.example.ResumeParser.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.ResumeParser.Service.Resumeservice;
-import com.example.ResumeParser.entity.Resume;
 import com.example.ResumeParser.entity.User;
 import com.example.ResumeParser.dto.ResumeWithSkillsDTO;
 import com.example.ResumeParser.dto.Resumefilterrequest;
-import com.example.ResumeParser.dto.SkillFilterRequest;
 import com.example.ResumeParser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class Resumecontroller {
 
     @Autowired
