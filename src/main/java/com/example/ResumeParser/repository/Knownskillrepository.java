@@ -9,6 +9,7 @@ import com.example.ResumeParser.entity.Knownskill;
 
 public interface Knownskillrepository extends JpaRepository<Knownskill, Long>{
     Optional<Knownskill> findByName(String name);
+    @SuppressWarnings("null")
     List<Knownskill> findAll();
     boolean existsByNameIgnoreCase(String name);
     

@@ -8,6 +8,7 @@ import java.util.Optional;  // Add this import
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+@SuppressWarnings("null")
 Optional<User> findById(Long id);  
 
     // Removed findById as it is already inherited from JpaRepository

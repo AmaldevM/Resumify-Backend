@@ -41,25 +41,6 @@ public class Resumecontroller {
 
         return ResponseEntity.ok("Resume uploaded and saved successfully for user with ID " + userId);
     }
-    // old method to save resume
-    // @PostMapping("/saveresume")
-    // public ResponseEntity<String> uploadAndSaveResume(@RequestParam("file") MultipartFile file) {
-    //     resumeservice.saveresume(file);
-    //     return ResponseEntity.ok("Resume parsed and saved successfully.");
-    // }
-
-
-        //old method to get all resumes in db
-    // @GetMapping("/resumes")
-    // public ResponseEntity<List<Resume>> getAllResumes() {
-    //     List<Resume> resumes = resumeservice.getAllResumes();
-    //     return ResponseEntity.ok(resumes);
-    // }
-
-    // @PostMapping("/filter")
-    // public List<ResumeWithSkillsDTO> filterResumes(@RequestBody SkillFilterRequest request) {
-    //     return resumeservice.filterResumes(request.getSkills(), (int) request.getMinExp());
-    // }
 
     // New endpoint to get resumes by userId
     @GetMapping("/resumesByUserId")

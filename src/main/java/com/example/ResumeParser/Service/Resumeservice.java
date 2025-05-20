@@ -80,6 +80,7 @@ public class Resumeservice {
         }
     }
 
+    @SuppressWarnings("null")
     private String extractTextFromFile(MultipartFile file) throws IOException {
         if (file.getOriginalFilename().endsWith(".pdf")) {
             try (PDDocument document = PDDocument.load(file.getInputStream())) {
@@ -297,6 +298,7 @@ public List<ResumeWithSkillsDTO> filterResumesByUser(Long userId, List<String> s
 // deklete users resume with id
 
 
+@SuppressWarnings("unused")
 public void deleteResumesByUserId(Long userId) {
     User user = userRepository.findById(userId)
                   .orElseThrow(() -> new RuntimeException("User not found"));

@@ -3,6 +3,9 @@ package com.example.ResumeParser.Controller;
 import com.example.ResumeParser.entity.User;
 import com.example.ResumeParser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -14,25 +17,35 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     // Register endpoint
-    @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        // Optional: Check if user already exists
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new RuntimeException("User with this email already exists");
-        }
-        return userRepository.save(user);
+   @PostMapping("/register")
+public ResponseEntity<?> registerUser(@RequestBody User user) {
+    if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this email already exists");
     }
+
+    // Encode the password
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    User savedUser = userRepository.save(user);
+
+    return ResponseEntity.ok(savedUser);
+}
+
 
     // Login endpoint
     @PostMapping("/login")
-    public User loginUser(@RequestBody User user) {
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
-        if (existingUser.isPresent() && existingUser.get().getPassword().equals(user.getPassword())) {
-            return existingUser.get(); // Successful login
+        if (existingUser.isPresent()) {
+            if (passwordEncoder.matches(user.getPassword(), existingUser.get().getPassword())) {
+                return ResponseEntity.ok(existingUser.get()); // Password matched
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+            }
         } else {
-            throw new RuntimeException("Invalid email or password");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
 }
